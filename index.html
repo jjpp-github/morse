@@ -1,0 +1,52 @@
+<div class="container">
+  <h1>摩斯密码加解密</h1>
+  <label for="input">输入内容：</label>
+  <input type="text" id="input" name="input"><br><br>
+  <button onclick="encode()">加密</button>
+  <button onclick="decode()">解密</button><br><br>
+  <label for="output">输出结果：</label>
+  <input type="text" id="output" name="output"><br><br>
+</div>
+
+<script>
+  function encode() {
+    let input = document.getElementById("input").value;
+    let output = "";
+    for (let i = 0; i < input.length; i++) {
+      let char = input[i].toLowerCase();
+      if (char === " ") {
+        output += "/";
+      } else {
+        output += MORSE_CODE[char] + " ";
+      }
+    }
+    document.getElementById("output").value = output.trim();
+  }
+
+  function decode() {
+  let input = document.getElementById("input").value;
+  let output = "";
+  let words = input.split("/");
+  for (let i = 0; i < words.length; i++) {
+    let letters = words[i].split(" ");
+    for (let j = 0; j < letters.length; j++) {
+      if (MORSE_CODE_REVERSE[letters[j]]) {
+        output += MORSE_CODE_REVERSE[letters[j]];
+      } else {
+        output += letters[j];
+      }
+    }
+    output += " ";
+  }
+  document.getElementById("output").value = output.trim();
+}
+
+  const MORSE_CODE = {
+    "a": ".-", "b": "-...", "c": "-.-.", "d": "-..", "e": ".", "f": "..-.", "g": "--.", "h": "....", "i": "..", "j": ".---", "k": "-.-", "l": ".-..", "m": "--", "n": "-.", "o": "---", "p": ".--.", "q": "--.-", "r": ".-.", "s": "...", "t": "-", "u": "..-", "v": "...-", "w": ".--", "x": "-..-", "y": "-.--", "z": "--..", "0": "-----", "1": ".----", "2": "..---", "3": "...--", "4": "....-", "5": ".....", "6": "-....", "7": "--...", "8": "---..", "9": "----.", ".": ".-.-.-", ",": "--..--", "?": "..--..", "'": ".----.", "/": "-..-.", "(": "-.--.", ")": "-.--.-", "&": ".-...", ":": "---...", ";": "-.-.-.", "=": "-...-", "+": ".-.-.", "-": "-....-", "_": "..--.-", "\"": ".-..-.", "$": "...-..-", "!": "-.-.--", "@": ".--.-."
+  };
+
+  const MORSE_CODE_REVERSE = {};
+  for (let char in MORSE_CODE) {
+    MORSE_CODE_REVERSE[MORSE_CODE[char]] = char;
+  }
+</script>
